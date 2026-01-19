@@ -16,19 +16,26 @@ const Courses = () => {
     }
 
     return (
-        <nav>
-            {dataCourses.map((course) => (
 
-                <div key={course.id} className={`courses${course.id}`}>
+        <div className="container">
+            <header>
+                <a className="homePage"><b>Domů</b></a>
+                <a className="review"><b>Recenze</b></a>
+            </header>
+            <nav>
+                {dataCourses.map((course) => (
 
-                    <h2>{course.title}</h2>
-                    <p>{course.description}</p>
-                    <button type="button" id={`btn${course.id}`} onClick={() => setSelectedCourseId(course.id)}>přejít na lekce</button>
+                    <div key={course.id} className={`courses${course.id}`}>
+
+                        <h2>{course.title}</h2>
+                        <p>{course.description}</p>
+                        <button type="button" id={`btn${course.id}`} onClick={() => setSelectedCourseId(course.id)}>přejít na lekce</button>
                 
-                </div>
-            ))}
+                    </div>
+                ))}
 
-        </nav>
+            </nav>
+        </div>
     )
 }
 

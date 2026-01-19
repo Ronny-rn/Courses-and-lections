@@ -29,10 +29,11 @@ const LessonList = ({ courseId, lessons, onBack }) => {
 
             <button type="button" onClick={onBack}>← Zpět na kurzy</button>
             <h1>Lekce pro kurz: {course.title}</h1>  
+
             <div className="lessons-container">
 
                 {content}
-
+                <button className="choose">Vybrat</button>
             </div>
         </div>
     );

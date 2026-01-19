@@ -12,6 +12,7 @@ button{
     border: 1px solid #155eca;
     border-radius: 20px;
     color: white;
+    justify-content: center;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -30,10 +31,24 @@ button{
     margin-right: 50px;
 }
 
-div {
+div{
     display: flex;
     flex-direction: column;
-    background-color: rgba(243, 241, 226, 0.5);
-    width: 1080px;
 }
 
+.lesson-card{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(236, 224, 191, 0.5);
+    width: 1000px;
+}
+.choose{
+    display: flex;
+    padding: 5px;
+    background-color: cornflowerblue;
+    margin-left: 450px;
+    margin-right: 450px;
+}
+.choose:hover {
+    background-color: blue;
+}
