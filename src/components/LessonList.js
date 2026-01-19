@@ -9,22 +9,30 @@ const LessonList = ({ courseId, lessons, onBack }) => {
 
     let content;
     if (courseLessons.length > 0) {
+
         content = courseLessons.map((lesson) => (
+
             <div key={lesson.id} className="lesson-card">
+
                 <p><strong>Popis:</strong> {lesson.description}</p>
                 <p><strong>Cena:</strong> {lesson.price}</p>
+
             </div>
         ));
     } else {
+        
         content = <p>Žádné lekce nejsou k dispozici.</p>;
     }
 
     return (
         <div>
+
             <button type="button" onClick={onBack}>← Zpět na kurzy</button>
-            <h1>Lekce pro kurz: {course.title}</h1>  // Zobrazuje název kurzu podle jeho ID
+            <h1>Lekce pro kurz: {course.title}</h1>  
             <div className="lessons-container">
+
                 {content}
+
             </div>
         </div>
     );
