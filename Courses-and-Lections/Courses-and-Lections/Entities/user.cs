@@ -28,7 +28,7 @@ public class User
 
 	public User(int userID, string title, string fullname, string username, string password, int age)
 	{
-		userID = UserID;
+		userID = UserId;
 		title = Title;
 		fullname = FullName;
 		username = Username;

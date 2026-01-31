@@ -1,4 +1,4 @@
-namespace Course_LecturesProject
+namespace Courses_and_Lections
 {
     public class Program
     {
