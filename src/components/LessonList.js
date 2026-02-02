@@ -1,9 +1,9 @@
 import "./LessonList.css";
-import dataCourses from "../data/DataCourses";
+import dataLessons from "../data/DataLessons";
 
 const LessonList = ({ courseId, lessons, onBack }) => {
     
-    const course = dataCourses.find(c => c.id === courseId); // Hledá v dataCourses kurz, které má stejné ID jako courseId a vrátí objekt kurzu
+    const course = dataLessons.find(c => c.id === courseId); // Hledá v dataLessons kurz, které má stejné ID jako courseId a vrátí objekt kurzu
     const courseLessons = lessons.filter(lesson => lesson.courseId === courseId); //z pole DataLessons vyfiltruje pouze lekce, které patří ke kurzu 
 
 
@@ -14,8 +14,8 @@ const LessonList = ({ courseId, lessons, onBack }) => {
 
             <div key={lesson.id} className="lesson-card">
 
-                <p><strong>Popis:</strong> {lesson.description}</p>
-                <p><strong>Cena:</strong> {lesson.price}</p>
+                <p ><strong>Popis:</strong> {lesson.description}</p>
+                <p ><strong>Cena:</strong> {lesson.price}</p>
 
             </div>
         ));
