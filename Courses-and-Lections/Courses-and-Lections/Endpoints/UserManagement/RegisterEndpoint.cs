@@ -23,7 +23,14 @@ namespace Courses_and_Lections.Endpoints.UserManagement
             await _context.SaveChangesAsync();
             return new RegisterResponse
             {
-                Message = "User registered successfully"
+                Success = true,
+                Message = "User registered successfully",
+                User = new UserData
+                {
+                    Id = newUser.UserId,
+                    FullName = newUser.FullName, 
+                    Username = newUser.Username
+                }
             };
         }
 
@@ -38,6 +45,9 @@ namespace Courses_and_Lections.Endpoints.UserManagement
     }
     public record RegisterResponse
     {
+        public bool Success { get; set; }
         public string Message { get; set; } = "";
-    }
+        public UserData? User { get; set; }
+    
+    }   
 }

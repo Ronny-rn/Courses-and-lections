@@ -21,6 +21,9 @@ namespace Courses_and_Lections.Entities
 
         [Column("leaderFrom")]
         public DateTime LeaderFrom { get; set; }
+        
+        [Column("contactEmail")]
+        public string ContactEmail { get; set; }
 
 
 

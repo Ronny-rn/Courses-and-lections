@@ -21,6 +21,10 @@ namespace Courses_and_Lections.Endpoints.UserManagement
 
         public override async Task<LoginResponse> ExecuteAsync(LoginRequest request, CancellationToken ct)
         {
+            if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+            {
+                ThrowError("Username or password is missing", 400);
+            }
            
 
             var user = await _context.Users
@@ -29,7 +33,7 @@ namespace Courses_and_Lections.Endpoints.UserManagement
 
             if(user is null)
             {
-                ThrowError("Could not log you in", 404);
+                ThrowError("Could not log you in", 401);
             }
             
             var jwt = JwtBearer.CreateToken(options =>
@@ -40,7 +44,19 @@ namespace Courses_and_Lections.Endpoints.UserManagement
             }
             
             );
-            return new LoginResponse { Message = $"{ jwt }, test" };
+            return new LoginResponse
+            {
+                Success = true,
+                Message = "Login successful ",  
+                User = new UserData
+                {
+                    Id = user.UserId,
+                    Username = user.Username,   
+                    FullName = user.FullName
+                },
+                JwtToken = jwt
+                
+            };
         }
     }
     public record LoginRequest
@@ -50,6 +66,15 @@ namespace Courses_and_Lections.Endpoints.UserManagement
     }
     public record LoginResponse
     {
+        public bool Success { get; set; }
         public string Message { get; set; } = "";
+        public UserData? User { get; set; }
+        public string? JwtToken { get; set; }
+    }
+    public record UserData
+    {
+        public int Id { get; set; }
+        public string Username { get; set; } = "";
+        public string FullName { get; set; } = "";
     }
 }

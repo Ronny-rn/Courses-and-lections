@@ -10,21 +10,32 @@ namespace Courses_and_Lections
     {
         public static void Main(string[] args)
         {
-            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("ReactPolicy", policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+            
             builder.Services.AddFastEndpoints();
             builder.Services.AddSwaggerDocument();
 
             builder.Services.AddAuthenticationJwtBearer(x => x.SigningKey = builder.Configuration["JwtSecret"]);
             builder.Services.AddAuthorization();
 
-            string connnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseMySQL(connnectionString));
+                options.UseMySQL(connectionString));
 
             var app = builder.Build();
+            
+            app.UseCors("ReactPolicy");
             app.UseFastEndpoints();
             app.UseSwaggerGen();
             app.Run();

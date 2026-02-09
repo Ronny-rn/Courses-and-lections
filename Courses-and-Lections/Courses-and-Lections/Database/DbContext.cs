@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Course> Courses { get; set; }
-    public DbSet<Lecture> Lections { get; set; }
+    public DbSet<Subject> Lections { get; set; }
     public DbSet<CourseLeader> CourseLeaders { get; set; }
     public DbSet<User> Users { get; set; }
 
