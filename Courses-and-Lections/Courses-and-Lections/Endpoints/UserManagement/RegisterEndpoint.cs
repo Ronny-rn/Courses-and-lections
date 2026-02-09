@@ -1,4 +1,6 @@
-﻿namespace Courses_and_Lections.Endpoints.UserManagement
+﻿using Courses_and_Lections.Entities;
+
+namespace Courses_and_Lections.Endpoints.UserManagement
 {
     public class RegisterEndpoint : Endpoint<RegisterRequest, RegisterResponse>
     {

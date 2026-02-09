@@ -16,7 +16,7 @@ namespace Courses_and_Lections.Endpoints
         {
             return new LectureResponse
             {
-                AllCaps = request.Check.ToUpper()
+                
             };
 
         }
