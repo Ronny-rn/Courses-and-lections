@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Courses_and_Lections.Entities
+namespace Course_and_Lection.Core.Entities
 {
     [Table("SubjectTable")]
     public class Subject
@@ -14,7 +14,6 @@ namespace Courses_and_Lections.Entities
         public string SubjectName { get; set; }
         [Column("Description")]
         public string Description { get; set; }
-        public DateTime CreatedAt { get; set; }
         
 
 

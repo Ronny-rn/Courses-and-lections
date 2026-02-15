@@ -23,7 +23,7 @@ namespace Courses_and_Lections.Endpoints.UserManagement
         {
             if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
             {
-                ThrowError("Username or password is missing", 400);
+                ThrowError("Username or password is missing", 401);
             }
            
 
@@ -46,8 +46,7 @@ namespace Courses_and_Lections.Endpoints.UserManagement
             );
             return new LoginResponse
             {
-                Success = true,
-                Message = "Login successful ",  
+                Success = true, 
                 User = new UserData
                 {
                     Id = user.UserId,
@@ -67,7 +66,6 @@ namespace Courses_and_Lections.Endpoints.UserManagement
     public record LoginResponse
     {
         public bool Success { get; set; }
-        public string Message { get; set; } = "";
         public UserData? User { get; set; }
         public string? JwtToken { get; set; }
     }
