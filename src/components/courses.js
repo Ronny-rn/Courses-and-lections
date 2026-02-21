@@ -1,4 +1,4 @@
-import "./courses.css";
+import "./Courses.css";
 import { useState } from "react";
 import dataCourses from "../data/DataCourses";
 import lessons from "../data/DataLessons";

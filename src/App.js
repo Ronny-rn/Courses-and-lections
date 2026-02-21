@@ -2,7 +2,7 @@ import { useState } from "react";
 import HomeList from "./components/HomeList";
 import SignIn from "./components/SignIn";
 import Register from "./components/Register";
-import Courses from "./components/courses";
+import Courses from "./components/Courses";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home"); 
