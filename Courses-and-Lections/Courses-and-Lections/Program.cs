@@ -1,9 +1,9 @@
-global using FastEndpoints;
 global using Microsoft.EntityFrameworkCore;
 global using Courses_and_Lections.Database;
+global using Courses_and_Lections.Entities;
 
-using FastEndpoints.Swagger;
-using FastEndpoints.Security;
+
+
 namespace Courses_and_Lections
 {
     public class Program
@@ -22,11 +22,12 @@ namespace Courses_and_Lections
                         .AllowCredentials();
                 });
             });
-            
-            builder.Services.AddFastEndpoints();
-            builder.Services.AddSwaggerDocument();
 
-            builder.Services.AddAuthenticationJwtBearer(x => x.SigningKey = builder.Configuration["JwtSecret"]);
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers();
+
+            builder.Services.AddAuthentication().AddJwtBearer();
             builder.Services.AddAuthorization();
 
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -34,12 +35,14 @@ namespace Courses_and_Lections
                 options.UseMySQL(connectionString));
 
             var app = builder.Build();
-            
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseCors("ReactPolicy");
-            app.UseFastEndpoints();
-            app.UseSwaggerGen();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.MapControllers();
             app.Run();
         }
-
     }
 }

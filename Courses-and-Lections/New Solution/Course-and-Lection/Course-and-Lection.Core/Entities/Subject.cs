@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Courses_and_Lections.Entities
+namespace Course_and_Lection.Core.Entities
 {
     [Table("SubjectTable")]
     public class Subject
@@ -9,13 +9,11 @@ namespace Courses_and_Lections.Entities
 
         [Key]
         [Column("SubjectID")]
-        public int SubjectId { get; init; }
+        public int SubjectId { get; set; }
         [Column("Title")]
-        public required string SubjectName { get; set; }
+        public string SubjectName { get; set; }
         [Column("Description")]
-        public required string Description { get; set; }
-        [Column("CreatedAt")]
-        public DateTime CreatedAt { get; init; }
+        public string Description { get; set; }
         
 
 

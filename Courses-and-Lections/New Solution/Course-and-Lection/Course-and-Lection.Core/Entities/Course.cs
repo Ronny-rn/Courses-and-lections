@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Courses_and_Lections.Entities
+namespace Course_and_Lection.Core.Entities
 {
     [Table("courseTable")]
     public class Course
@@ -18,10 +18,8 @@ namespace Courses_and_Lections.Entities
         public int Capacity { get; set; }
         [Column("startDate")]
         public DateTime StartDate { get; set; }
-        [Column("scheduledBeginTime")]
-        public DateTime ScheduledBeginTime { get; set; }
-        [Column("SubjectID")]
-        public int SubjectId { get; set; }
+        [Column("courseLeader")]
+        public int CourseLeader { get; set; }
 
     }
 

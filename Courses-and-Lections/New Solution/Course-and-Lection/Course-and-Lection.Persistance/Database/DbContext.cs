@@ -2,9 +2,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Courses_and_Lections.Entities;
+using Course_and_Lection.Core.Entities;
 
-namespace Courses_and_Lections.Database;
+namespace Course_and_Lection.Persistance.Database;
 
 public class AppDbContext : DbContext
 {
@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Course> Courses { get; set; }
-    public DbSet<Subject> Subjects { get; set; }
+    public DbSet<Subject> Lections { get; set; }
     public DbSet<CourseLeader> CourseLeaders { get; set; }
     public DbSet<User> Users { get; set; }
 
