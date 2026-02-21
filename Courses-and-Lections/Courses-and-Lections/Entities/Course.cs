@@ -18,8 +18,10 @@ namespace Courses_and_Lections.Entities
         public int Capacity { get; set; }
         [Column("startDate")]
         public DateTime StartDate { get; set; }
-        [Column("courseLeader")]
-        public int CourseLeader { get; set; }
+        [Column("scheduledBeginTime")]
+        public DateTime ScheduledBeginTime { get; set; }
+        [Column("SubjectID")]
+        public int SubjectId { get; set; }
 
     }
 

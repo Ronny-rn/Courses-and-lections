@@ -9,12 +9,13 @@ namespace Courses_and_Lections.Entities
 
         [Key]
         [Column("SubjectID")]
-        public int SubjectId { get; set; }
+        public int SubjectId { get; init; }
         [Column("Title")]
-        public string SubjectName { get; set; }
+        public required string SubjectName { get; set; }
         [Column("Description")]
-        public string Description { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public required string Description { get; set; }
+        [Column("CreatedAt")]
+        public DateTime CreatedAt { get; init; }
         
 
 
