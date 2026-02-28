@@ -1,20 +1,44 @@
-import { useState } from "react";
-import HomeList from "./components/HomeList";
+import { useState, useEffect } from "react";
+//useEffect - umožňuje provádět vedlejší efekty v komponentách. U mě ukládání do localStorage
+import Courses from "./components/Courses";
 import SignIn from "./components/SignIn";
 import Register from "./components/Register";
-import Courses from "./components/Courses";
+import MyOrders from "./components/MyOrder";
+
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home"); 
-  const [user, setUser] = useState(null); // přihlášený uživatel
+  const [currentPage, setCurrentPage] = useState("courses");
+  //currentPage - jaká stránka se zobrazuje ("courses", "signIn", "register")
+  //setCurrentPage - fce pro změnu aktuální stránky
+
+  // Načtení uživ. z localStorage 
+  const [user, setUser] = useState(() => {
+
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+
+  });
 
 
-  const handleLoginSuccess = (userData) => {
+  // Uložení uživ. do localStorage 
+
+  useEffect(() => { // Spustí se pokaždé, když se změní "user"
+
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+
+    } else {
+      localStorage.removeItem('user');
+    }
+
+  }, [user]);
+
+
+  const handleLoginSuccess = (userData) => { //co se stane po úspěšném přihlášení
 
     setUser(userData);
     setCurrentPage("courses");
   };
-
 
   const handleRegisterSuccess = (userData) => {
 
@@ -22,27 +46,21 @@ function App() {
     setCurrentPage("courses");
   };
 
-
   const handleLogout = () => {
 
     setUser(null);
-    setCurrentPage("home");
+    setCurrentPage("courses");
   };
 
   // Render podle aktuální stránky
-  if (currentPage === "home") {
-
-    return (
-
-      <HomeList onSignInClick={() => setCurrentPage("signIn")} onRegisterClick={() => setCurrentPage("register")}/>
-    );
-  }
-
   if (currentPage === "signIn") {
 
     return (
 
-      <SignIn onLoginSuccess={handleLoginSuccess} onBackClick={() => setCurrentPage("home")}/>
+      <SignIn 
+        onLoginSuccess={handleLoginSuccess}
+        onBackClick={() => setCurrentPage("courses")}
+      />
     );
   }
 
@@ -50,30 +68,34 @@ function App() {
 
     return (
 
-      <Register onRegisterSuccess={handleRegisterSuccess} onBackClick={() => setCurrentPage("home")}/>
+      <Register 
+        onRegisterSuccess={handleRegisterSuccess}
+        onBackClick={() => setCurrentPage("courses")}
+      />
     );
   }
 
-  if (currentPage === "courses" && user) {
-
+  if (currentPage === "myOrders") {
     return (
-
-      <div>
-
-        <div className="user-info">
-
-          <span>Přihlášen: {user.username || user.email}</span>
-          <button onClick={handleLogout} className="btn-logout" >
-            Odhlásit se
-          </button>
-
-        </div>
-        <Courses />
-      </div>
+      <MyOrders 
+        user={user}
+        onBackClick={() => setCurrentPage("courses")}
+      />
     );
   }
 
-  return null;
+  return (
+   
+    <Courses 
+      user={user}
+      onSignInClick={() => setCurrentPage("signIn")}
+      onRegisterClick={() => setCurrentPage("register")}
+      onMyOrdersClick={() => setCurrentPage("myOrders")}
+      onLogout={handleLogout}
+    />
+  );
 }
+
+
 
 export default App;

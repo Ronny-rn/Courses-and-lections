@@ -1,0 +1,337 @@
+.myorders-page {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #F9F9F9 0%, #E8E8E8 100%);
+}
+
+.myorders-header {
+    background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+    padding: 2rem 2rem 3rem 2rem;
+    position: relative;
+}
+
+.myorders-header h1 {
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 1rem;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #FF6B35, #F77F00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.myorders-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+
+.order-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-left: 5px solid #FF6B35;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.order-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1A1A2E;
+    flex: 1;
+}
+
+.order-status {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-active {
+    background: linear-gradient(135deg, #06D6A0 0%, #1F7A8C 100%);
+    color: white;
+}
+
+.status-pending {
+    background: #FFF4E6;
+    color: #F77F00;
+    border: 2px solid #F77F00;
+}
+
+.order-lesson {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.order-details {
+    background: #F9F9F9;
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.order-details p {
+    margin-bottom: 0.6rem;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.order-details p:last-child {
+    margin-bottom: 0;
+}
+
+.order-details strong {
+    color: #1A1A2E;
+    font-weight: 600;
+}
+
+.order-meta {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-top: 2px solid #F0F0F0;
+    border-bottom: 2px solid #F0F0F0;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.order-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-edit,
+.btn-delete {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #004E89 0%, #1F7A8C 100%);
+    color: white;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 78, 137, 0.3);
+}
+
+.btn-delete {
+    background: #FFE5E5;
+    color: #E74C3C;
+    border: 2px solid #E74C3C;
+}
+
+.btn-delete:hover {
+    background: #E74C3C;
+    color: white;
+    transform: translateY(-2px);
+}
+
+
+.order-edit-mode {
+    background: #F0F8FF;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: -1rem;
+}
+
+.order-edit-mode h3 {
+    font-size: 1.4rem;
+    color: #1A1A2E;
+    margin-bottom: 0.5rem;
+}
+
+.edit-form {
+    margin-top: 1.5rem;
+}
+
+.edit-form .form-group {
+    margin-bottom: 1.2rem;
+}
+
+.edit-form label {
+    display: block;
+    font-weight: 600;
+    color: #1A1A2E;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.edit-form input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.edit-form input:focus {
+    outline: none;
+    border-color: #004E89;
+    box-shadow: 0 0 0 3px rgba(0, 78, 137, 0.1);
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-save,
+.btn-cancel-edit {
+    flex: 1;
+    padding: 0.9rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #06D6A0 0%, #1F7A8C 100%);
+    color: white;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(6, 214, 160, 0.4);
+}
+
+.btn-cancel-edit {
+    background: #E8E8E8;
+    color: #666;
+}
+
+.btn-cancel-edit:hover {
+    background: #D5D5D5;
+    color: #333;
+}
+
+
+.empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+}
+
+.empty-icon {
+    font-size: 6rem;
+    margin-bottom: 2rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.empty-state h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1A1A2E;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.btn-browse {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #FF6B35 0%, #F77F00 100%);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-browse:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(255, 107, 53, 0.4);
+}
+
+
+@media (max-width: 768px) {
+    .myorders-header h1 {
+        font-size: 2rem;
+    }
+
+    .orders-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .order-card {
+        padding: 1.5rem;
+    }
+
+    .order-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .order-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .order-actions {
+        flex-direction: column;
+    }
+}

@@ -4,14 +4,16 @@
     box-sizing: border-box;
 }
 
-.home-container {
-    min-height: 80vh;
+.welcome-container {
     display: flex;
+    min-height: 80vh;
+    min-width: 100rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #ea8766 0%, #a24b4b 100%);
-    padding: 20px;
+    background-color: bisque;
+    box-shadow: 0 6px 20px rgba(116, 115, 115, 0.2);
+    margin-left: -4rem;
 }
 
 .home-container h1 {
@@ -21,6 +23,14 @@
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.home-container h2 {
+    color: rgb(165, 114, 71);
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+
 
 .button-container {
     display: flex;
@@ -43,7 +53,7 @@
 
 .btn-signin {
     background: white;
-    color: #ea8766;
+    color: #d8a631;
 }
 
 .btn-signin:hover {
@@ -62,22 +72,4 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     background: rgba(255, 255, 255, 0.1);
-}
-
-
-@media (max-width: 768px) {
-    .home-container h1 {
-        font-size: 2rem;
-    }
-
-    .button-container {
-        flex-direction: column;
-        width: 100%;
-        max-width: 300px;
-    }
-
-    .btn-signin,
-    .btn-register {
-        width: 100%;
-    }
 }
