@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Courses_and_Lections.Entities
+namespace Course_and_Lection.Core.Entities
 {
     [Table("CourseLeaders")]
     public class CourseLeader
