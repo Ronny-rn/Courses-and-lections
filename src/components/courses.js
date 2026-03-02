@@ -4,7 +4,7 @@ import dataCourses from "../data/DataCourses";
 import dataLessons from "../data/DataLessons";
 import LessonList from "./LessonList";
 
-const Courses = ({ user, onSignInClick, onRegisterClick, onMyOrdersClick, onLogout }) => {
+const Courses = ({ user, onSignInClick, onRegisterClick, onLogout, onMyOrdersClick }) => {
   const [selectedCourseId, setSelectedCourseId] = useState(null);
 
   // Pokud je vybraný kurz, zobraz lekce
@@ -17,7 +17,9 @@ const Courses = ({ user, onSignInClick, onRegisterClick, onMyOrdersClick, onLogo
             onSignInClick={onSignInClick}
             onRegisterClick={onRegisterClick}
             onLogout={onLogout}
+            onMyOrdersClick={onMyOrdersClick}
             onBack={() => setSelectedCourseId(null)}
+            
       />
     );
   }

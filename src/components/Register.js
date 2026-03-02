@@ -4,9 +4,10 @@ import { useState } from "react";
 const Register = ({ onRegisterSuccess, onBackClick }) => {
 
     const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
+    const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [age, setAge] = useState("");
     const [error, setError] = useState("");
 
     const handleSubmit = async (e) => {
@@ -14,7 +15,7 @@ const Register = ({ onRegisterSuccess, onBackClick }) => {
         setError("");
 
         // --------------Validace------------------------
-        if (!username || !email || !password || !confirmPassword) {
+        if (!username || !fullName || !password || !confirmPassword || !age) {
         setError("Vyplňte všechna pole");
         return;
         }
@@ -31,18 +32,30 @@ const Register = ({ onRegisterSuccess, onBackClick }) => {
 
         try {
             
-        // TODO: volání API
+            const response = await fetch('http://localhost:5059/api/users/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                username: username,
+                fullName: fullName,
+                password: password,
+                age: parseInt(age)
+                })
+            });
 
-      
-        // Zatím simulace úspěšné registrace
-        const userData = {
-            username: username,
-            email: email
-        };
-      
-        onRegisterSuccess(userData);
+            const data = await response.json();
+
+            if (data.success) {
+                // Úspěšná registrace
+                onRegisterSuccess(data.user);
+            } else {
+                setError(data.message || "Registrace selhala");
+            }
+
         } catch (err) {
-        setError("Registrace selhala. Zkuste to znovu.");
+
+            console.error('Registration error:', err);
+            setError("Nelze se připojit k serveru");
         }
     };
 
@@ -55,15 +68,21 @@ const Register = ({ onRegisterSuccess, onBackClick }) => {
 
                 <div className="form-group">
                         
-                <label htmlFor="username">Uživatelské jméno:</label>
-                <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required/>
+                    <label htmlFor="username">Uživatelské jméno:</label>
+                    <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required/>
                 </div>
 
                 <div className="form-group">
 
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-                 </div>
+                    <label htmlFor="fullName">Celé jméno:</label>
+                    <input type="text" id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} required/>
+                </div>
+                
+                <div className="form-group">
+
+                    <label htmlFor="age">Věk:</label>
+                    <input type="number" id="age" value={age} onChange={(e) => setAge(e.target.value)} required />
+                </div>
 
                 <div className="form-group">
 

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const SignIn = ({ onLoginSuccess, onBackClick }) => {
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -13,33 +13,35 @@ const SignIn = ({ onLoginSuccess, onBackClick }) => {
     setError("");
 
     // Validace
-    if (!email || !password) {
+    if (!username || !password) {
       setError("Vyplňte všechna pole");
       return;
         }
 
     try {
-      // TODO: Zde zavolej API tvého kolegy pro přihlášení
-      // Příklad:
-      // const response = await fetch('/api/login', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email, password })
-      // });
-      // const data = await response.json();
+      const response = await fetch('http://localhost:5059/api/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          username: username,
+          password: password 
+        })
+      });
       
       // Zatím simulace úspěšného přihlášení
-        const userData = {
-          
-            email: email,
-            username: email.split('@')[0] 
-        };
+      const data = await response.json();
       
-        onLoginSuccess(userData);
+      if (data.success) {
+        onLoginSuccess(data.user);
 
+      }else {
+        setError("Neplatné přihlašovací údaje");
+      }
+      
+        
     } catch (err) {
 
-        setError("Přihlášení selhalo. Zkuste to znovu.");
+      setError("Přihlášení selhalo. Zkuste to znovu. (nelze se připojit k serveru)");
     }
   };
 
@@ -51,8 +53,8 @@ const SignIn = ({ onLoginSuccess, onBackClick }) => {
               
             <div className="form-group">
                   
-                <label htmlFor="email">Email:</label> 
-                <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                <label htmlFor="username">Uživatelské jméno:</label> 
+                <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required/>
             
             </div>
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Courses from "./components/Courses";
 import SignIn from "./components/SignIn";
 import Register from "./components/Register";
-import MyOrders from "./components/MyOrder";
+import MyOrder from "./components/MyOrder";
 
 
 function App() {
@@ -75,12 +75,12 @@ function App() {
     );
   }
 
-  if (currentPage === "myOrders") {
+  if (currentPage === "myOrder") {
     return (
-      <MyOrders 
-        user={user}
-        onBackClick={() => setCurrentPage("courses")}
-      />
+      <MyOrder 
+        user={user || { id: "guest"}}
+        onBack={() => setCurrentPage("courses")}
+      />  
     );
   }
 
