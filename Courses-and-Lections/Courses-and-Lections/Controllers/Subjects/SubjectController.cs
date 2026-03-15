@@ -21,20 +21,16 @@ public class SubjectsController : ControllerBase
     }
 
     [HttpGet("{subjectId}")]
-    public async Task<ActionResult<ReadSubjectResponse>> GetSubject(int subjectId)
+    public async Task<ActionResult<List<ReadSubjectResponse>>> GetSubject(int subjectId)
     {
         var subject = await _context.Subjects
-            .Where(x => x.SubjectId == subjectId)
             .Select(x => new ReadSubjectResponse
             {
                 SubjectId = x.SubjectId,
                 SubjectName = x.SubjectName,
                 Description = x.Description
             })
-            .FirstOrDefaultAsync();
-
-        if (subject is null)
-            return NotFound("Subject not found");
+            .ToListAsync();
 
         return Ok(subject);
     }

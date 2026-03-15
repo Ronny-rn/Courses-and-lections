@@ -18,10 +18,9 @@ public class CoursesController : ControllerBase
     }
 
     [HttpGet("{courseId}")]
-    public async Task<ActionResult<ReadCourseResponse>> GetCourse(int courseId)
+    public async Task<ActionResult<List<ReadCourseResponse>>> GetCourse(int courseId)
     {
         var course = await _context.Courses
-            .Where(x => x.CourseID == courseId)
             .Select(x => new ReadCourseResponse
             {
                 CourseId = x.CourseID,
@@ -32,10 +31,7 @@ public class CoursesController : ControllerBase
                 ScheduledBeginTime = x.ScheduledBeginTime,
                 SubjectId = x.SubjectId
             })
-            .FirstOrDefaultAsync();
-
-        if (course is null)
-            return NotFound("Course not found");
+            .ToListAsync();
 
         return Ok(course);
     }
