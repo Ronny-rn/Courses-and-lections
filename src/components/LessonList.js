@@ -1,10 +1,8 @@
 import "./LessonList.css";
-import { useState } from "react";
-import dataCourses from "../data/DataCourses";
+import { useState, useEffect } from "react";
 
 const LessonList = ({
   courseId,
-  lessons,
   user,
   onSignInClick,
   onRegisterClick,
@@ -14,26 +12,52 @@ const LessonList = ({
 }) => {
 
   const [showAuthMessage, setShowAuthMessage] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [subjectName, setSubjectName] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  const course = dataCourses.find(c => c.id === courseId);
-  const courseLessons = lessons.filter(lesson => lesson.courseId === courseId);
+  useEffect(() => {
+    fetchCourses();
+    fetchSubjectName();
+  }, [courseId]);
 
- const handleOrderClick = (lesson) => {
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch(`https://localhost:7054/api/courses/${courseId}`);
+      const data = await response.json();
+      setCourses(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Chyba pri nacteni kurzu:', error);
+      setLoading(false);
+    }
+  };
+
+  const fetchSubjectName = async () => {
+    try {
+      const response = await fetch(`https://localhost:7054/api/subjects/${courseId}`);
+      const data = await response.json();
+      setSubjectName(data.subjectName);
+    } catch (error) {
+      console.error('Chyba pri nacteni subject name:', error);
+    }
+  };
+ const handleOrderClick = (course) => {
 
   // použijeme buď přihlášeného usera,
   // nebo testovacího
     const testUserId = user?.id || "guest";
 
-    const newOrder = {
+const newOrder = {
         id: Date.now(),
-        courseName: course.title,
-        lessonTitle: lesson.title,
-        startDate: lesson.startDate,
+        courseName: subjectName,
+        lessonTitle: course.courseName,
+        startDate: course.startDate,
         numberOfPeople: 1,
-        totalPrice: lesson.price,
-        ageMin: lesson.ageMin,
-        ageMax: lesson.ageMax,
-        maxCapacity: lesson.capacity,
+        totalPrice: `${course.price} Kč`,
+        ageMin: 0,
+        ageMax: 99,
+        maxCapacity: course.capacity,
         status: "active",
         createdAt: new Date().toISOString()
     };
@@ -66,73 +90,60 @@ const LessonList = ({
 
       <div className="lesson-container">
 
-        <button type="button" className="btn-back" onClick={onBack}>
-          ← Zpět na kurzy
-        </button>
+        <button type="button" className="btn-back" onClick={onBack}> ← Zpět na kurzy</button>
 
-        <h1>Lekce pro kurz: {course?.title || `#${courseId}`}</h1>
+       <h1>Lekce pro kurz: {subjectName || `#${courseId}`}</h1>
 
         {showAuthMessage && !user && (
-          <div className="auth-message">
-            <p>
-              Pro objednání kurzu se musíte nejdříve přihlásit nebo zaregistrovat.
-            </p>
-            <div className="auth-message-buttons">
-              <button
-                className="btn-message-signin"
-                onClick={onSignInClick}
-              >
-                Přihlásit se
-              </button>
 
-              <button
-                className="btn-message-register"
-                onClick={onRegisterClick}
-              >
-                Registrovat se
-              </button>
+          <div className="auth-message">
+
+            <p>Pro objednání kurzu se musíte nejdříve přihlásit nebo zaregistrovat.</p>
+            <div className="auth-message-buttons">
+
+              <button className="btn-message-signin" onClick={onSignInClick} >Přihlásit se</button>
+
+              <button className="btn-message-register" onClick={onRegisterClick}>Registrovat se</button>
             </div>
           </div>
         )}
 
-        <div className="lessons-container">
-          {courseLessons.length > 0 ? (
-            courseLessons.map((lesson) => (
-              <div key={lesson.id} className="lesson-card">
-
-                <h3>{lesson.title}</h3>
-
-                <p><strong>Popis:</strong> {lesson.description}</p>
-                <p><strong>Cena:</strong> {lesson.price}</p>
-                <p><strong>Doba trvání:</strong> {lesson.duration}</p>
-
-                <p className="lesson-age">
-                  Věk: {lesson.ageMin} - {lesson.ageMax} let
-                </p>
-
-                <div className="lesson-info">
-                  <span className="lesson-date">
-                    {new Date(lesson.startDate).toLocaleDateString("cs-CZ")}
-                  </span>
-
-                  <span className="lesson-capacity">
-                    {lesson.capacity} míst
-                  </span>
+        {loading ? (
+          <p>Načítám lekce...</p>
+        ) : (
+          <div className="lessons-container">
+            {courses.length > 0 ? (
+              courses.map((course) => (
+                <div key={course.courseId} className="lesson-card">
+                  <h3>{course.courseName}</h3>
+ 
+                  <p><strong>Popis:</strong> {course.description}</p>
+                  <p><strong>Cena:</strong> {course.price} Kč</p>
+                  <p><strong>Kapacita:</strong> {course.capacity} míst</p>
+ 
+                  <div className="lesson-info">
+                    <span className="lesson-date">
+                      {new Date(course.startDate).toLocaleDateString("cs-CZ")}
+                    </span>
+ 
+                    <span className="lesson-capacity">
+                      {course.capacity} míst
+                    </span>
+                  </div>
+ 
+                  <button
+                    className="btn-order"
+                    onClick={() => handleOrderClick(course)}
+                  >
+                    {user ? "Objednat kurz" : "Přihlásit se a objednat"}
+                  </button>
                 </div>
-
-                <button
-                  className="btn-order"
-                  onClick={() => handleOrderClick(lesson)}
-                >
-                  {user ? "Objednat kurz" : "Přihlásit se a objednat"}
-                </button>
-
-              </div>
-            ))
-          ) : (
-            <p>Žádné lekce nejsou k dispozici pro tento kurz.</p>
-          )}
-        </div>
+              ))
+            ) : (
+              <p>Žádné lekce nejsou k dispozici pro tento kurz.</p>
+            )}
+          </div>
+        )}
 
       </div>
     </div>

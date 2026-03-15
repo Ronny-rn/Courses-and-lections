@@ -1,18 +1,38 @@
 import "./Courses.css";
-import { useState } from "react";
-import dataCourses from "../data/DataCourses";
-import dataLessons from "../data/DataLessons";
+import { useState, useEffect } from "react";
 import LessonList from "./LessonList";
 
 const Courses = ({ user, onSignInClick, onRegisterClick, onLogout, onMyOrdersClick }) => {
-  const [selectedCourseId, setSelectedCourseId] = useState(null);
+    const [selectedCourseId, setSelectedCourseId] = useState(null);
+    const [subjects, setSubjects] = useState([]);
+    const [loading, setLoading] = useState(true)
 
-  // Pokud je vybraný kurz, zobraz lekce
+
+    useEffect(() => {
+        fetchSubjects();
+    }, []);
+
+    const fetchSubjects = async () => {
+
+        try {
+            const response = await fetch('https://localhost:7054/api/subjects');
+            const data = await response.json();
+             console.log('Nactene subjects:', data); // DEBUG
+            setSubjects(data);
+            setLoading(false);
+
+        } catch (error) {
+            console.error('Chyba při načítání předmětů:', error);
+            setLoading(false);
+        }
+    };
+
+
+  // Pokud je vybraný kurz, zobrazí se lekce
   if (selectedCourseId) {
     return (
       <LessonList 
             courseId={selectedCourseId}
-            lessons={dataLessons}
             user={user}
             onSignInClick={onSignInClick}
             onRegisterClick={onRegisterClick}
@@ -54,13 +74,9 @@ const Courses = ({ user, onSignInClick, onRegisterClick, onLogout, onMyOrdersCli
                     {!user && (
                         <div className="welcome-buttons">
                                     
-                            <button className="btn-welcome-signin" onClick={onSignInClick}>
-                                Přihlásit se
-                            </button>
+                            <button className="btn-welcome-signin" onClick={onSignInClick}>Přihlásit se</button>
                                     
-                            <button className="btn-welcome-register" onClick={onRegisterClick}>
-                                Registrovat se
-                            </button>
+                            <button className="btn-welcome-register" onClick={onRegisterClick}> Registrovat se </button>
                                     
                         </div>
                     )}
@@ -71,13 +87,25 @@ const Courses = ({ user, onSignInClick, onRegisterClick, onLogout, onMyOrdersCli
 
                 <div className="courses-grid">
                     
-                {dataCourses.map((course) => (
-                    <div key={course.id} className={`course-card course-${course.id}`}>
-                    <h2>{course.title}</h2>
-                    <p>{course.description}</p>
-                    <button type="button" className="btn-course" onClick={() => setSelectedCourseId(course.id)}>Přejít na lekce</button>
-                    </div>
-                ))}
+           {loading ? (
+                <p>Nacitam kurzy...</p>
+                      
+            ) : subjects.length === 0 ? (
+                <p>Zadne kurzy nejsou k dispozici.</p>
+            ) : (
+                    <div className="courses-grid">
+                                  
+                        {subjects.map((subject) => (
+                            
+                            <div key={subject.subjectId} className={`course-card course-${subject.subjectId}`}>
+                                <h2>{subject.subjectName}</h2>
+                                <p>{subject.description}</p>
+                                <button type="button" className="btn-course" onClick={() => setSelectedCourseId(subject.subjectId)}>Prejit na lekce</button>
+                            </div>
+                        ))}
+                </div>
+            )}
+                  
             </div>
         </div>
     </div>
