@@ -7,6 +7,7 @@ namespace Courses_and_Lections.Entities
     public class User
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("userID")]
         public int UserId { get; set; }
 
