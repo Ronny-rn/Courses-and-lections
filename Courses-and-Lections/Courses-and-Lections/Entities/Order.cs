@@ -17,4 +17,5 @@ public class Order
     [Column("TotalPrice")]
     public decimal TotalPrice { get; set; }
     
+    public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

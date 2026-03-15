@@ -25,6 +25,9 @@ namespace Courses_and_Lections.Entities
         [Column("price")]
         public decimal Price { get; set; }
         
+        [ForeignKey("SubjectId")]
+        public Subject Subject { get; set; }
+        
     }
 
 }
