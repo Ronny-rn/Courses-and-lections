@@ -17,9 +17,9 @@ namespace Courses_and_Lections.Entities
         [Column("capacity")]
         public int Capacity { get; set; }
         [Column("startDate")]
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
         [Column("scheduledBeginTime")]
-        public DateTime ScheduledBeginTime { get; set; }
+        public TimeOnly ScheduledBeginTime { get; set; }
         [Column("SubjectID")]
         public int SubjectId { get; set; }
 

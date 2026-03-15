@@ -17,10 +17,30 @@ public class CoursesController : ControllerBase
         _context = context;
     }
 
-    [HttpGet("{courseId}")]
-    public async Task<ActionResult<List<ReadCourseResponse>>> GetCourse(int courseId)
+    [HttpGet("")]
+    public async Task<ActionResult<List<ReadCourseResponse>>> GetCourse()
     {
         var course = await _context.Courses
+            .Select(x => new ReadCourseResponse
+            {
+                CourseId = x.CourseID,
+                CourseName = x.CourseName,
+                Description = x.Description,
+                Capacity = x.Capacity,
+                StartDate = x.StartDate,
+                ScheduledBeginTime = x.ScheduledBeginTime,
+                SubjectId = x.SubjectId
+            })
+            .ToListAsync();
+
+        return Ok(course);
+    }
+    
+    [HttpGet("{subjectId}")]
+    public async Task<ActionResult<List<ReadCourseResponse>>> GetCourseBySubjectId(int subjectId)
+    {
+        var course = await _context.Courses
+            .Where(x => x.SubjectId == subjectId)
             .Select(x => new ReadCourseResponse
             {
                 CourseId = x.CourseID,
@@ -116,8 +136,8 @@ public record ReadCourseResponse
     public string CourseName { get; set; }
     public string Description { get; set; }
     public int Capacity { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime ScheduledBeginTime { get; set; }
+    public DateOnly StartDate { get; set; }
+    public TimeOnly ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
 }
 
@@ -126,8 +146,8 @@ public record CreateCourseRequest
     public string CourseName { get; set; }
     public string Description { get; set; }
     public int Capacity { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime ScheduledBeginTime { get; set; }
+    public DateOnly StartDate { get; set; }
+    public TimeOnly ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
 }
 
@@ -141,8 +161,8 @@ public record UpdateCourseRequest
     public string CourseName { get; set; }
     public string Description { get; set; }
     public int Capacity { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime ScheduledBeginTime { get; set; }
+    public DateOnly StartDate { get; set; }
+    public TimeOnly ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
 }
 
@@ -152,8 +172,8 @@ public record UpdateCourseResponse
     public string CourseName { get; set; }
     public string Description { get; set; }
     public int Capacity { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime ScheduledBeginTime { get; set; }
+    public DateOnly StartDate { get; set; }
+    public TimeOnly ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
     public string Message { get; set; }
 }

@@ -20,8 +20,8 @@ public class SubjectsController : ControllerBase
         _context = context;
     }
 
-    [HttpGet("{subjectId}")]
-    public async Task<ActionResult<List<ReadSubjectResponse>>> GetSubject(int subjectId)
+    [HttpGet("")]
+    public async Task<ActionResult<List<ReadSubjectResponse>>> GetSubject()
     {
         var subject = await _context.Subjects
             .Select(x => new ReadSubjectResponse
@@ -31,6 +31,25 @@ public class SubjectsController : ControllerBase
                 Description = x.Description
             })
             .ToListAsync();
+
+        return Ok(subject);
+    }
+    
+    [HttpGet("{subjectId}")]
+    public async Task<ActionResult<ReadSubjectResponse>> GetSubjectById(int subjectId)
+    {
+        var subject = await _context.Subjects
+            .Where(x => x.SubjectId == subjectId)
+            .Select(x => new ReadSubjectResponse
+            {
+                SubjectId = x.SubjectId,
+                SubjectName = x.SubjectName,
+                Description = x.Description
+            })
+            .FirstOrDefaultAsync(x => x.SubjectId == subjectId);
+        
+        if (subject is null)
+            return NotFound("Subject not found");
 
         return Ok(subject);
     }
