@@ -49,7 +49,8 @@ public class CoursesController : ControllerBase
                 Capacity = x.Capacity,
                 StartDate = x.StartDate,
                 ScheduledBeginTime = x.ScheduledBeginTime,
-                SubjectId = x.SubjectId
+                SubjectId = x.SubjectId,
+                Price = x.Price
             })
             .ToListAsync();
 
@@ -66,7 +67,8 @@ public class CoursesController : ControllerBase
             Capacity = request.Capacity,
             StartDate = request.StartDate,
             ScheduledBeginTime = request.ScheduledBeginTime,
-            SubjectId = request.SubjectId
+            SubjectId = request.SubjectId,
+            Price = request.Price
         };
 
         _context.Courses.Add(course);
@@ -93,6 +95,7 @@ public class CoursesController : ControllerBase
         course.StartDate = request.StartDate;
         course.ScheduledBeginTime = request.ScheduledBeginTime;
         course.SubjectId = request.SubjectId;
+        course.Price = request.Price;
 
         await _context.SaveChangesAsync();
 
@@ -105,6 +108,7 @@ public class CoursesController : ControllerBase
             StartDate = course.StartDate,
             ScheduledBeginTime = course.ScheduledBeginTime,
             SubjectId = course.SubjectId,
+            Price = course.Price,
             Message = "Course successfully updated"
         });
     }
@@ -139,6 +143,7 @@ public record ReadCourseResponse
     public DateOnly StartDate { get; set; }
     public TimeOnly ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
+    public decimal Price { get; set; }
 }
 
 public record CreateCourseRequest
@@ -149,6 +154,7 @@ public record CreateCourseRequest
     public DateOnly StartDate { get; set; }
     public TimeOnly ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
+    public decimal Price { get; set; }
 }
 
 public record CreateCourseResponse
@@ -164,6 +170,7 @@ public record UpdateCourseRequest
     public DateOnly StartDate { get; set; }
     public TimeOnly ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
+    public decimal Price { get; set; }
 }
 
 public record UpdateCourseResponse
@@ -175,6 +182,7 @@ public record UpdateCourseResponse
     public DateOnly StartDate { get; set; }
     public TimeOnly ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
+    public decimal Price { get; set; }
     public string Message { get; set; }
 }
 
