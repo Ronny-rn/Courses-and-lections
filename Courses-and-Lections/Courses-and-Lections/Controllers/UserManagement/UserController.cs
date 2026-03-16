@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -35,16 +36,16 @@ public class UsersController : ControllerBase
         if (user is null)
             return Unauthorized("Could not log you in");
 
-        var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
-            new Claim(JwtRegisteredClaimNames.Name, user.Username)
-        };
+        var jwt = GenerateJwt(user);
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecret"]));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var token = new JwtSecurityToken(claims: claims, signingCredentials: creds);
-        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+       
+        Response.Cookies.Append("auth_token", jwt, new CookieOptions
+        {
+            HttpOnly = true,                  
+            Secure = true,                    
+            SameSite = SameSiteMode.None,     
+            Expires = DateTimeOffset.UtcNow.AddHours(8)
+        });
 
         return Ok(new LoginResponse
         {
@@ -53,10 +54,46 @@ public class UsersController : ControllerBase
             {
                 Id = user.UserId,
                 Username = user.Username,
-                FullName = user.FullName
-            },
-            JwtToken = jwt
+                FullName = user.FullName,
+                Role = user.Role
+            }
         });
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public async Task<ActionResult<UserData>> Me()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)
+                       ?? User.FindFirst(JwtRegisteredClaimNames.Sub);
+
+        if (userIdClaim is null || !int.TryParse(userIdClaim.Value, out var userId))
+            return Unauthorized();
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        if (user is null)
+            return Unauthorized();
+
+        return Ok(new UserData
+        {
+            Id = user.UserId,
+            Username = user.Username,
+            FullName = user.FullName,
+            Role = user.Role
+        });
+    }
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("auth_token", new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None
+        });
+
+        return Ok(new { Message = "Logged out successfully" });
     }
 
     [HttpPost("register")]
@@ -67,7 +104,9 @@ public class UsersController : ControllerBase
             FullName = request.FullName,
             Username = request.Username,
             Password = request.Password,
-            Age = request.Age
+            Age = request.Age,
+           
+            Role = "User"
         };
 
         _context.Users.Add(newUser);
@@ -81,11 +120,15 @@ public class UsersController : ControllerBase
             {
                 Id = newUser.UserId,
                 FullName = newUser.FullName,
-                Username = newUser.Username
+                Username = newUser.Username,
+                Role = newUser.Role
             }
         });
     }
 
+    
+
+    [Authorize(Roles = "Administrator")]
     [HttpPut("{userId}")]
     public async Task<ActionResult<UpdateUserResponse>> UpdateUser(int userId, UpdateUserRequest request)
     {
@@ -111,6 +154,7 @@ public class UsersController : ControllerBase
         });
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpDelete("{userId}")]
     public async Task<ActionResult<DeleteUserResponse>> DeleteUser(int userId)
     {
@@ -128,9 +172,31 @@ public class UsersController : ControllerBase
             Message = "User successfully deleted"
         });
     }
+
+ 
+
+    private string GenerateJwt(User user)
+    {
+        var claims = new[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
+            new Claim(JwtRegisteredClaimNames.Name, user.Username),
+            new Claim(ClaimTypes.Role, user.Role)
+        };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecret"]!));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(8),
+            signingCredentials: creds
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
 }
 
-// Request / Response records
+
 
 public record LoginRequest
 {
@@ -142,7 +208,7 @@ public record LoginResponse
 {
     public bool Success { get; set; }
     public UserData? User { get; set; }
-    public string? JwtToken { get; set; }
+    // No JwtToken field — token is in the HTTP-only cookie
 }
 
 public record RegisterRequest
@@ -151,6 +217,15 @@ public record RegisterRequest
     public string Username { get; set; } = "";
     public string Password { get; set; } = "";
     public int Age { get; set; }
+}
+
+public record AdminCreateUserRequest
+{
+    public string FullName { get; set; } = "";
+    public string Username { get; set; } = "";
+    public string Password { get; set; } = "";
+    public int Age { get; set; }
+    public string Role { get; set; } = "User";
 }
 
 public record RegisterResponse
@@ -162,18 +237,18 @@ public record RegisterResponse
 
 public record UpdateUserRequest
 {
-    public string Fullname { get; set; }
-    public string Username { get; set; }
+    public string Fullname { get; set; } = "";
+    public string Username { get; set; } = "";
     public int Age { get; set; }
 }
 
 public record UpdateUserResponse
 {
     public int Id { get; init; }
-    public string Fullname { get; init; }
-    public string Username { get; init; }
+    public string Fullname { get; init; } = "";
+    public string Username { get; init; } = "";
     public int Age { get; init; }
-    public string Message { get; init; }
+    public string Message { get; init; } = "";
 }
 
 public record DeleteUserResponse
@@ -186,4 +261,5 @@ public record UserData
     public int Id { get; set; }
     public string Username { get; set; } = "";
     public string FullName { get; set; } = "";
+    public string Role { get; set; } = "";
 }

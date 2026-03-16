@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
@@ -16,7 +17,7 @@ public class OrderController : ControllerBase
     {
         _context = context;
     }
-
+    [Authorize]  
     [HttpGet("{orderId}")]
     public async Task<ActionResult<ReadOrderResponse>> GetOrder(int orderId)
     {
@@ -38,7 +39,7 @@ public class OrderController : ControllerBase
 
         return Ok(order);
     }
-
+    [Authorize]  
     [HttpPost]
     public async Task<ActionResult<CreateOrderResponse>> CreateOrder(CreateOrderRequest request)
     {
@@ -73,7 +74,7 @@ public class OrderController : ControllerBase
             TotalPrice = totalPrice
         });
     }
-
+    [Authorize]  
     [HttpPut("{orderId}")]
     public async Task<ActionResult<UpdateOrderResponse>> UpdateOrder(int orderId, UpdateOrderRequest request)
     {
@@ -110,7 +111,7 @@ public class OrderController : ControllerBase
             Message = "Order successfully updated"
         });
     }
-
+    [Authorize]  
     [HttpDelete("{orderId}")]
     public async Task<ActionResult<DeleteOrderResponse>> DeleteOrder(int orderId)
     {

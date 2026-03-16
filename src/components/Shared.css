@@ -1,0 +1,158 @@
+/* ── Shared layout & auth header ─────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    background: #F4F4F8;
+    color: #1A1A2E;
+}
+
+.auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+    padding: 1.2rem 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.auth-header-left h1,
+.auth-header-left h3 {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.auth-header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-name {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.btn-logout {
+    padding: 0.55rem 1.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: rgba(255, 107, 53, 0.15);
+    color: #FF6B35;
+    border: 2px solid #FF6B35;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.btn-logout:hover {
+    background: #FF6B35;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-header-signin {
+    padding: 0.55rem 1.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #FF6B35, #F77F00);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    box-shadow: 0 3px 12px rgba(255, 107, 53, 0.35);
+}
+
+.btn-header-signin:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(255, 107, 53, 0.5);
+}
+
+.btn-header-register {
+    padding: 0.55rem 1.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.btn-header-register:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: white;
+    transform: translateY(-2px);
+}
+
+.btn-my-orders {
+    padding: 0.55rem 1.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: rgba(0, 78, 137, 0.2);
+    color: #7EC8E3;
+    border: 2px solid #7EC8E3;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.btn-my-orders:hover {
+    background: #004E89;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: white;
+    color: #1A1A2E;
+    border: 2px solid #E0E0E0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    margin-bottom: 2rem;
+}
+
+.btn-back:hover {
+    border-color: #FF6B35;
+    color: #FF6B35;
+    transform: translateX(-3px);
+}
+
+.error-message {
+    color: #E74C3C;
+    background: linear-gradient(135deg, #FFE5E5 0%, #FFD5D5 100%);
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    text-align: center;
+    font-weight: 500;
+    border-left: 4px solid #E74C3C;
+}

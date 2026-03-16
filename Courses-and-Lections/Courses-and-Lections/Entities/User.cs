@@ -22,6 +22,9 @@ namespace Courses_and_Lections.Entities
 
         [Column("age")]
         public int Age { get; set; }
+        
+        [Column("role")]
+        public string Role { get; set; } = "User";
 
     }
 }

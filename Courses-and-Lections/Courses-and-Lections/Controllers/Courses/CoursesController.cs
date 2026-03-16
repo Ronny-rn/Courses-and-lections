@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
@@ -16,7 +17,7 @@ public class CoursesController : ControllerBase
     {
         _context = context;
     }
-
+   
     [HttpGet("")]
     public async Task<ActionResult<List<ReadCourseResponse>>> GetCourse()
     {
@@ -35,7 +36,7 @@ public class CoursesController : ControllerBase
 
         return Ok(course);
     }
-    
+   
     [HttpGet("{subjectId}")]
     public async Task<ActionResult<List<ReadCourseResponse>>> GetCourseBySubjectId(int subjectId)
     {
@@ -56,7 +57,7 @@ public class CoursesController : ControllerBase
 
         return Ok(course);
     }
-
+    [Authorize]  
     [HttpPost]
     public async Task<ActionResult<CreateCourseResponse>> CreateCourse(CreateCourseRequest request)
     {
@@ -79,7 +80,7 @@ public class CoursesController : ControllerBase
             Message = "Course successfully created"
         });
     }
-
+    [Authorize]  
     [HttpPut("{courseId}")]
     public async Task<ActionResult<UpdateCourseResponse>> UpdateCourse(int courseId, UpdateCourseRequest request)
     {
@@ -112,7 +113,7 @@ public class CoursesController : ControllerBase
             Message = "Course successfully updated"
         });
     }
-
+    [Authorize]  
     [HttpDelete("{courseId}")]
     public async Task<ActionResult<DeleteCourseResponse>> DeleteCourse(int courseId)
     {

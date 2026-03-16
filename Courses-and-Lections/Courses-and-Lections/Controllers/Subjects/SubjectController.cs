@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Courses_and_Lections.Database;
 using Courses_and_Lections.Entities;
+using Microsoft.AspNetCore.Authorization;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
@@ -19,7 +20,7 @@ public class SubjectsController : ControllerBase
     {
         _context = context;
     }
-
+     
     [HttpGet("")]
     public async Task<ActionResult<List<ReadSubjectResponse>>> GetSubject()
     {
@@ -53,7 +54,7 @@ public class SubjectsController : ControllerBase
 
         return Ok(subject);
     }
-
+    [Authorize]  
     [HttpPost]
     public async Task<ActionResult<CreateSubjectResponse>> CreateSubject(CreateSubjectRequest request)
     {
@@ -72,7 +73,7 @@ public class SubjectsController : ControllerBase
             Message = "Subject successfully created"
         });
     }
-
+    [Authorize]  
     [HttpPut("{subjectId}")]
     public async Task<ActionResult<UpdateSubjectResponse>> UpdateSubject(int subjectId, UpdateSubjectRequest request)
     {
@@ -95,7 +96,7 @@ public class SubjectsController : ControllerBase
             Message = "Subject successfully updated"
         });
     }
-
+    [Authorize]  
     [HttpDelete("{subjectId}")]
     public async Task<ActionResult<DeleteSubjectResponse>> DeleteSubject(int subjectId)
     {
