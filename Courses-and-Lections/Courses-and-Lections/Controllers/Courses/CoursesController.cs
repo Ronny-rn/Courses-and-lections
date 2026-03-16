@@ -113,7 +113,7 @@ public class CoursesController : ControllerBase
             Message = "Course successfully updated"
         });
     }
-    [Authorize]  
+    [Authorize]
     [HttpDelete("{courseId}")]
     public async Task<ActionResult<DeleteCourseResponse>> DeleteCourse(int courseId)
     {
@@ -123,7 +123,13 @@ public class CoursesController : ControllerBase
         if (course is null)
             return NotFound("Course not found");
 
+        // Remove related OrderItems first
+        var relatedOrderItems = _context.OrderItems
+            .Where(x => x.CourseId == courseId);
+
+        _context.OrderItems.RemoveRange(relatedOrderItems);
         _context.Courses.Remove(course);
+
         await _context.SaveChangesAsync();
 
         return Ok(new DeleteCourseResponse
