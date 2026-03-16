@@ -39,6 +39,29 @@ public class OrderController : ControllerBase
 
         return Ok(order);
     }
+    
+    [Authorize]  
+    [HttpGet("customer/{customerId}")]
+    public async Task<ActionResult<List<ReadOrderResponse>>> GetOrderByCustomer(int customerId)
+    {
+        var order = await _context.Orders
+            .Where(x => x.CustomerId == customerId)
+            .Select(x => new ReadOrderResponse
+            {
+                OrderId = x.OrderId,
+                OrderNumber = x.OrderNumber,
+                TotalPrice = x.TotalPrice,
+                CustomerId = x.CustomerId,
+                OrderDate = x.OrderDate,
+                CourseIds = x.OrderItems.Select(oi => oi.CourseId).ToList()
+            })
+            .ToListAsync();
+
+        if (order is null)
+            return NotFound("Order not found");
+
+        return Ok(order);
+    }
     [Authorize]  
     [HttpPost]
     public async Task<ActionResult<CreateOrderResponse>> CreateOrder(CreateOrderRequest request)
