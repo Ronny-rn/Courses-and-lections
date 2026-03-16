@@ -30,13 +30,22 @@ export const getSubjects = () =>
 export const getSubjectById = (subjectId) =>
     api.get(`/subjects/${subjectId}`);
 
-
-
 export const getCoursesBySubject = (subjectId) =>
     api.get(`/courses/${subjectId}`);
 
 
+// CRUD for courses
+export const createCourse = (courseData) =>
+    api.post("/courses", courseData);
+ 
+export const updateCourse = (courseId, courseData) =>
+    api.put(`/courses/${courseId}`, courseData);
+ 
+export const deleteCourse = (courseId) =>
+    api.delete(`/courses/${courseId}`);
 
+
+// CRUD for Orders
 export const getOrder = (orderId) =>
     api.get(`/Order/${orderId}`);
 

@@ -10,8 +10,9 @@ function App() {
     const [currentPage, setCurrentPage] = useState("courses");
     const [user, setUser] = useState(null);
     const [authChecked, setAuthChecked] = useState(false);
+    const [pendingOrder, setPendingOrder] = useState(null);
 
-    // On mount: ask the API if we have a valid session cookie
+    // Při připojení se zeptá API, jestli máme platný soubor cookie relace
     useEffect(() => {
         getMe()
             .then(({ data }) => setUser(data))
@@ -19,7 +20,7 @@ function App() {
             .finally(() => setAuthChecked(true));
     }, []);
 
-    // Don't render anything until we know the auth state
+    // Nevykreslí se nic, dokud neznáme stav autorizace
     if (!authChecked) return null;
 
     const handleLoginSuccess = (userData) => {
@@ -61,6 +62,7 @@ function App() {
             <MyOrder
                 user={user}
                 onBack={() => setCurrentPage("courses")}
+                pendingOrder={pendingOrder}
             />
         );
     }
@@ -72,6 +74,10 @@ function App() {
             onRegisterClick={() => setCurrentPage("register")}
             onMyOrdersClick={() => setCurrentPage("myOrders")}
             onLogout={handleLogout}
+            onOrderCreated={(order) => {
+                setPendingOrder(order);
+                setCurrentPage("myOrders");
+            }}
         />
     );
 }

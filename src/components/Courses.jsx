@@ -3,7 +3,7 @@ import { getSubjects } from "./apiService";
 import LessonList from "./LessonList";
 import "./Courses.css";
 
-const Courses = ({ user, onSignInClick, onRegisterClick, onLogout, onMyOrdersClick }) => {
+const Courses = ({ user, onSignInClick, onRegisterClick, onLogout, onMyOrdersClick, onOrderCreated }) => {
     const [selectedSubjectId, setSelectedSubjectId] = useState(null);
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -33,6 +33,7 @@ const Courses = ({ user, onSignInClick, onRegisterClick, onLogout, onMyOrdersCli
                 onRegisterClick={onRegisterClick}
                 onLogout={onLogout}
                 onMyOrdersClick={onMyOrdersClick}
+                onOrderCreated={onOrderCreated}
                 onBack={() => setSelectedSubjectId(null)}
             />
         );

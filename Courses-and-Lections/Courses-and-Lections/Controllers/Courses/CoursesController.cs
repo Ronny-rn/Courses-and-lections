@@ -4,7 +4,7 @@ using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
 using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
-    
+
 namespace Courses_and_Lections.Controllers.Courses;
 
 [Route("api/[controller]")]
@@ -17,7 +17,7 @@ public class CoursesController : ControllerBase
     {
         _context = context;
     }
-   
+
     [HttpGet("")]
     public async Task<ActionResult<List<ReadCourseResponse>>> GetCourse()
     {
@@ -36,7 +36,7 @@ public class CoursesController : ControllerBase
 
         return Ok(course);
     }
-   
+
     [HttpGet("{subjectId}")]
     public async Task<ActionResult<List<ReadCourseResponse>>> GetCourseBySubjectId(int subjectId)
     {
@@ -57,7 +57,7 @@ public class CoursesController : ControllerBase
 
         return Ok(course);
     }
-    [Authorize]  
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<CreateCourseResponse>> CreateCourse(CreateCourseRequest request)
     {
@@ -80,7 +80,7 @@ public class CoursesController : ControllerBase
             Message = "Course successfully created"
         });
     }
-    [Authorize]  
+    [Authorize]
     [HttpPut("{courseId}")]
     public async Task<ActionResult<UpdateCourseResponse>> UpdateCourse(int courseId, UpdateCourseRequest request)
     {
@@ -113,7 +113,7 @@ public class CoursesController : ControllerBase
             Message = "Course successfully updated"
         });
     }
-    [Authorize]  
+    [Authorize]
     [HttpDelete("{courseId}")]
     public async Task<ActionResult<DeleteCourseResponse>> DeleteCourse(int courseId)
     {
@@ -142,7 +142,7 @@ public record ReadCourseResponse
     public string Description { get; set; }
     public int Capacity { get; set; }
     public DateOnly StartDate { get; set; }
-    public TimeOnly ScheduledBeginTime { get; set; }
+    public TimeSpan ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
     public decimal Price { get; set; }
 }
@@ -153,7 +153,7 @@ public record CreateCourseRequest
     public string Description { get; set; }
     public int Capacity { get; set; }
     public DateOnly StartDate { get; set; }
-    public TimeOnly ScheduledBeginTime { get; set; }
+    public TimeSpan ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
     public decimal Price { get; set; }
 }
@@ -169,7 +169,7 @@ public record UpdateCourseRequest
     public string Description { get; set; }
     public int Capacity { get; set; }
     public DateOnly StartDate { get; set; }
-    public TimeOnly ScheduledBeginTime { get; set; }
+    public TimeSpan ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
     public decimal Price { get; set; }
 }
@@ -181,7 +181,7 @@ public record UpdateCourseResponse
     public string Description { get; set; }
     public int Capacity { get; set; }
     public DateOnly StartDate { get; set; }
-    public TimeOnly ScheduledBeginTime { get; set; }
+    public TimeSpan ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
     public decimal Price { get; set; }
     public string Message { get; set; }
