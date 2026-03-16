@@ -142,7 +142,7 @@ public record ReadCourseResponse
     public string Description { get; set; }
     public int Capacity { get; set; }
     public DateOnly StartDate { get; set; }
-    public TimeOnly ScheduledBeginTime { get; set; }
+    public TimeSpan ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
     public decimal Price { get; set; }
 }
@@ -153,7 +153,7 @@ public record CreateCourseRequest
     public string Description { get; set; }
     public int Capacity { get; set; }
     public DateOnly StartDate { get; set; }
-    public TimeOnly ScheduledBeginTime { get; set; }
+    public TimeSpan ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
     public decimal Price { get; set; }
 }
@@ -169,7 +169,7 @@ public record UpdateCourseRequest
     public string Description { get; set; }
     public int Capacity { get; set; }
     public DateOnly StartDate { get; set; }
-    public TimeOnly ScheduledBeginTime { get; set; }
+    public TimeSpan ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
     public decimal Price { get; set; }
 }
@@ -181,7 +181,7 @@ public record UpdateCourseResponse
     public string Description { get; set; }
     public int Capacity { get; set; }
     public DateOnly StartDate { get; set; }
-    public TimeOnly ScheduledBeginTime { get; set; }
+    public TimeSpan ScheduledBeginTime { get; set; }
     public int SubjectId { get; set; }
     public decimal Price { get; set; }
     public string Message { get; set; }

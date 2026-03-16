@@ -19,7 +19,7 @@ namespace Courses_and_Lections.Entities
         [Column("startDate")]
         public DateOnly StartDate { get; set; }
         [Column("scheduledBeginTime")]
-        public TimeOnly ScheduledBeginTime { get; set; }
+        public TimeSpan ScheduledBeginTime { get; set; }
         [Column("SubjectID")]
         public int SubjectId { get; set; }
         [Column("price")]

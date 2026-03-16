@@ -27,12 +27,6 @@ public class AppDbContext : DbContext
                     v => v.ToDateTime(TimeOnly.MinValue),
                     v => DateOnly.FromDateTime(v)
                 );
-
-            entity.Property(e => e.ScheduledBeginTime)
-                .HasConversion(
-                    v => v.ToTimeSpan(),
-                    v => TimeOnly.FromTimeSpan(v)
-                );
         });
     }
 }
