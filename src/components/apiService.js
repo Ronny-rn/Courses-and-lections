@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:5059/api",
+    baseURL: "https://localhost:7054/api",
     withCredentials: true, // sends HTTP-only cookie automatically
     headers: {
         "Content-Type": "application/json",

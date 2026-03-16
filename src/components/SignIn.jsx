@@ -17,7 +17,7 @@ const SignIn = ({ onLoginSuccess, onBackClick }) => {
         }
 
         try {
-            const response = await fetch('http://localhost:5059/api/Users/login', {
+            const response = await fetch('https://localhost:7054/api/Users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include', // sends & receives the HTTP-only cookie
