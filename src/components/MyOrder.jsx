@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getOrder, updateOrder, deleteOrder, createOrder } from "./apiService";
+import { getOrder,  getOrdersByCustomer, updateOrder, deleteOrder, createOrder } from "./apiService";
 import "./MyOrder.css";
  
 const MyOrder = ({ user, onBack, pendingOrder }) => {
@@ -33,6 +33,16 @@ const MyOrder = ({ user, onBack, pendingOrder }) => {
             .finally(() => setLoading(false));
     }, [pendingOrder]);
  
+    useEffect(() => {
+    if (!user?.id) return;
+    setLoading(true);
+    getOrdersByCustomer(user.id)
+        .then(({ data }) => setOrders(data))
+        .catch(() => {})
+        .finally(() => setLoading(false));
+    }, [user]);
+    
+    /*
     const fetchOrder = async (orderId) => {
         try {
             const { data } = await getOrder(orderId);
@@ -45,6 +55,7 @@ const MyOrder = ({ user, onBack, pendingOrder }) => {
             setLoading(false);
         }
     };
+    */
  
     const showSuccess = (msg) => {
         setSuccessMsg(msg);

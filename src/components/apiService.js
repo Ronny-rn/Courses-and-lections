@@ -49,6 +49,9 @@ export const deleteCourse = (courseId) =>
 export const getOrder = (orderId) =>
     api.get(`/Order/${orderId}`);
 
+export const getOrdersByCustomer = (customerId) =>  
+    api.get(`/Order/customer/${customerId}`);
+
 export const createOrder = (customerId, courseIds) =>
     api.post("/Order", { customerId, courseIds });
 
