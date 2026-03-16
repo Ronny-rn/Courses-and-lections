@@ -8,10 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2febcc8-27de-42d1-aeb0-95877e504895" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Courses-and-Lections/Endpoints/LectureEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Courses-and-Lections/Endpoints/Lectures/CreateLectureEndpoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Courses-and-Lections/Endpoints/UserManagement/LoginEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Courses-and-Lections/Endpoints/UserManagement/LoginEndpoint.cs" afterDir="false" />
-    </list>
+    <list default="true" id="a2febcc8-27de-42d1-aeb0-95877e504895" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,6 +106,7 @@
       <updated>1770927594292</updated>
       <workItem from="1770927596051" duration="3960000" />
       <workItem from="1771163168512" duration="16000" />
+      <workItem from="1773622549693" duration="4000" />
     </task>
     <servers />
   </component>
